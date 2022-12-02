@@ -40,8 +40,8 @@ let joinConverter = {
 
     },
     _procesTableName() {
-        this.params.table = this.joinString.match(/on .*? /i)[0]
-            .replace(/(on | )/gi, '')
+        this.params.table = this.joinString.match(/join .*? on/i)[0]
+            .replace(/(join | on)/gi,"")
     },
     _procesOnClauses(){
         let on = this.joinString.replace(/^.* on /i, "").replace(/ as .*$/i, "")
