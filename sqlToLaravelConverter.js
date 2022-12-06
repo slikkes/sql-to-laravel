@@ -1,11 +1,11 @@
 class sqlToLaravel{
   constructor(){
     this.converters = {
-      select: null,
-      from: null,
+      select: new SelectConverter(),
+      from: new FromConverter(),
       joins: new JoinConverter(),
-      wheres: null,
-      groupBy: null,
+      wheres: new WhereConverter(),
+      groupBy: new GroupByConverter(),
       orderBy: null,
     }
   }
@@ -13,11 +13,12 @@ class sqlToLaravel{
   convertSqlToLaravel(sqlStr){
     sqlStr = sqlStr.replace(/[\n\t]/g, ' ')
     .replace(/ {2,}/g, ' ')
+    .replaceAll('`','')
     .trim()
 
     let parts = {
-      select: this._parseSelect(sqlStr),
       from: this._parseFrom(sqlStr),
+      select: this._parseSelect(sqlStr),
       joins: this._parseJoins(sqlStr),
       wheres: this._parseWhere(sqlStr),
       groupBy: this._parseGroupBy(sqlStr),
@@ -76,7 +77,31 @@ class sqlToLaravel{
 
     return str;
   }
-  _parseWhere(str){}
-  _parseGroupBy(str){}
+  _parseWhere(str){
+    if( !str.includes('where')){
+      return null;
+    }
+
+    let ret = str.match(/where.*(group by|order by)/i);
+    if(ret){
+      return ret[0].replace(/(group by|order by)/i,"")
+      .trim()
+    }
+
+    return str.match(/where.*/)[0];
+  }
+  _parseGroupBy(str){
+    if( !str.toLowerCase().includes('group by')){
+      return null;
+    }
+
+    let ret = str.match(/group by.*(having|order by)/i);
+    if(ret){
+      return ret[0].replace(/(having|order by)/i,"")
+      .trim()
+    }
+
+    return str.match(/group by.*/)[0];
+  }
   _parseOrderBy(str){}
 }

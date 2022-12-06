@@ -29,7 +29,7 @@ class JoinConverter{
 
         return this._generateLaravelStatement()
       } catch (e) {
-        console.error(e);
+        console.warn(`cannot parse '${i}'`);
         return i;
       }
     }).join("")
