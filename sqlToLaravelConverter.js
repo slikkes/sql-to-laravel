@@ -25,7 +25,7 @@ class sqlToLaravel{
       orderBy: this._parseOrderBy(sqlStr),
     }
 
-    console.log(parts);
+  //  console.log(parts);
 
     return Object.entries(parts)
     .map(part => this.converters[part[0]]?.convert(part[1]))

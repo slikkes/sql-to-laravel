@@ -3,6 +3,6 @@ class FromConverter{
     let table  = joinString.replace(/from/i, '')
     .trim();
 
-    return "table('" + table + "')";
+    return "\DB::table('" + table + "')";
   }
 }
