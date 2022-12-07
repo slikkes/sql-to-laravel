@@ -1,7 +1,7 @@
 class GroupByConverter{
   convert(groupByString) {
     return groupByString
-    .replace('group by','')
+    .replace(/group by/i,'')
     .trim()
     .split(',')
     .map(item=>{

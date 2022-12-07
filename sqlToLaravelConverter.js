@@ -25,11 +25,16 @@ class sqlToLaravel{
       orderBy: this._parseOrderBy(sqlStr),
     }
 
-  //  console.log(parts);
+    // console.log(parts);
 
     return Object.entries(parts)
-    .map(part => this.converters[part[0]]?.convert(part[1]))
-    .join("");
+    .map(part => {
+      if(!part[1]){
+        return null;
+      }
+      return this.converters[part[0]]?.convert(part[1])
+    })
+    .join("\n");
   }
 
   _parseSelect(str){
@@ -61,7 +66,7 @@ class sqlToLaravel{
     return str;
   }
   _parseJoins(str){
-    if( !str.includes('join')){
+    if( !str.toLowerCase().includes('join')){
       return null;
     }
 
@@ -78,7 +83,7 @@ class sqlToLaravel{
     return str;
   }
   _parseWhere(str){
-    if( !str.includes('where')){
+    if( !str.toLowerCase().includes('where')){
       return null;
     }
 
@@ -88,7 +93,7 @@ class sqlToLaravel{
       .trim()
     }
 
-    return str.match(/where.*/)[0];
+    return str.match(/where.*/i)[0];
   }
   _parseGroupBy(str){
     if( !str.toLowerCase().includes('group by')){
@@ -101,7 +106,7 @@ class sqlToLaravel{
       .trim()
     }
 
-    return str.match(/group by.*/)[0];
+    return str.match(/group by.*/i)[0];
   }
   _parseOrderBy(str){}
 }

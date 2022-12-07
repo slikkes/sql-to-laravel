@@ -1,9 +1,9 @@
 class WhereConverter{
   convert(whereString) {
     return whereString
-    .replace('where','')
+    .replace(/where/i,'')
     .trim()
-    .split('and')
+    .split(/and/i)
     .map(item=>{
 
       let s = item.trim();
@@ -20,7 +20,7 @@ class WhereConverter{
 
       return `->whereRaw('${s}')`;
     })
-    .join("")
+    .join("\n")
   }
 
   _generateLaravelStatement(selectItems){

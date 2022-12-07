@@ -1,17 +1,16 @@
 class JoinConverter{
   convert(joinString) {
-    this._validate();
-
     return joinString.trim()
     .split(" ")
     .reduce((carry, item)=>{
-      if(["inner", "left", "right"].includes(item)){
-        carry.push(item);
+
+      if(["inner", "left", "right"].includes(item.toLowerCase())){
+        carry.push(item.toLowerCase());
         return carry;
       }
 
-      if(item === "join" && !["inner", "left", "right"].includes(carry[carry.length-1])){
-        carry.push(item);
+      if(item.toLowerCase() === "join" && !["inner", "left", "right"].includes(carry[carry.length-1])){
+        carry.push(item.toLowerCase());
         return carry;
       }
 

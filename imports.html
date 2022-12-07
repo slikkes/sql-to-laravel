@@ -1,6 +1,29 @@
-<script src="./converters/JoinConverter.js" ></script>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>sql to laravel</title>
+	<script src="./converters/JoinConverter.js" ></script>
 <script src="./converters/SelectConverter.js" ></script>
 <script src="./converters/FromConverter.js" ></script>
 <script src="./converters/WhereConverter.js" ></script>
 <script src="./converters/GroupByConverter.js" ></script>
 <script src="./sqlToLaravelConverter.js" ></script>
+</head>
+<body>
+<div style="display:flex; justify-content: center;">
+	<div><textarea oninput="converter.update(event.target.value)" style="width: 40vw; height:80vh"></textarea></div>
+	<div><textarea id="output" disabled style=" width: 40vw; height:80vh"></textarea></div>
+</div>
+<script>
+	let converter = {
+		service: new sqlToLaravel(),
+		update(str){
+			document.getElementById('output').value = this.service.convertSqlToLaravel(str)
+		}
+	}
+</script>
+</body>
+</html>
