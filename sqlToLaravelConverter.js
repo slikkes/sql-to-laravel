@@ -42,7 +42,7 @@ class sqlToLaravel{
       return null;
     }
     if(/select.*from/i.test(str)){
-      return str.match(/select.*from/i)[0].replace("from","").trim()
+      return str.match(/select.*from/i)[0].replace(/from/i,"").trim()
     }
 
     return str;

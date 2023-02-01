@@ -1,7 +1,7 @@
 class SelectConverter{
   convert(selectString) {
     let selectItems = selectString
-    .replace('select','')
+    .replace(/select/i,'')
     .trim()
     .split(',')
     .map(item=>{
@@ -13,7 +13,7 @@ class SelectConverter{
       }
 
       return {
-        s:"\DB::raw('" + s + "')",
+        s:"\\DB::raw('" + s + "')",
         raw: true
       };
     });
@@ -25,7 +25,7 @@ class SelectConverter{
     let str = "->select(";
 
     str += selectItems.map(i=>i.raw ? i.s : `'${i.s}'`)
-    .join(",")
+    .join(",\n")
 
     return str +")"
   }

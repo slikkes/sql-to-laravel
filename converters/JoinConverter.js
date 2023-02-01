@@ -31,7 +31,7 @@ class JoinConverter{
         console.warn(`cannot parse '${i}'`);
         return i;
       }
-    }).join("")
+    }).join("\n")
 
 
   }
